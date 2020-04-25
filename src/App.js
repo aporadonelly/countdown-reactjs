@@ -1,26 +1,44 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
+import Clock from './components/Clock';
+import { Form, FormControl, Button } from 'react-bootstrap';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  state = {
+    deadline: 'July 15, 2020',
+    newDeadline: '',
+  };
+
+  onChange = (e) => {
+    this.setState({
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  onSubmit = (e) => {
+    console.log('state', this.state);
+    this.setState({
+      deadline: this.state.newDeadline,
+    });
+  };
+
+  render() {
+    return (
+      <div className='App'>
+        <h1 className='App-title'>Countdown to {this.state.deadline}</h1>
+        <Clock deadline={this.state.deadline} />
+        <Form inline={true} style={{ justifyContent: 'center' }}>
+          <FormControl
+            type='text'
+            name='newDeadline'
+            placeholder='Set new Deadline'
+            onChange={this.onChange}
+          />
+          <Button onClick={this.onSubmit}>Submit</Button>
+        </Form>
+      </div>
+    );
+  }
 }
 
 export default App;
